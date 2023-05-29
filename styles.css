@@ -45,7 +45,8 @@
     display: inline-block
 }
 
-.regular, .operation, .number, .equals {
+.regular, .operation, .number, .equals, .addition, 
+.subtraction, .division, .multiplication {
     width: 60px;
     height: 60px;
     border-radius: 50%;

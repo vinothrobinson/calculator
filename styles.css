@@ -14,18 +14,38 @@
     border: black solid 1px;
     border-radius: 15px;
     display: inline-block;
+    text-align: center;
     margin-top: 30px;
     margin-bottom: 30px;
+}
+
+.display-equation {
+    width: 250px;
+    height: 36px;
+    border: black solid 1px;
+    margin-top: 2px;
+    position: relative;
+    left: 4px;
+    top: 1px;
+}
+
+.display-input {
+    width: 250px;
+    height: 34px;
+    border: black solid 1px;
+    margin-bottom: 2px;
+    position: relative;
+    left: 4px;
 }
 
 .calculator-buttons {
     width: 260px;
     height: 320px;
     /* border: black solid 1px; */
-    margin-top: 120px;
+    display: inline-block
 }
 
-.regular, .operation {
+.regular, .operation, .number, .equals {
     width: 60px;
     height: 60px;
     border-radius: 50%;
@@ -41,9 +61,4 @@
     width: 120px;
     height: 60px;
     border-radius: 15px;
-    border: black solid 1px;
-    margin: 1px;
-    background-color: rgb(199, 194, 194);
-    font-size: 20px;
-    color: white;
 }

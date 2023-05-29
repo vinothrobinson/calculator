@@ -30,28 +30,118 @@ function divide(a, b){
 
 // Function that chooses which operation to use
 function operate() {
+    displayEquation()
     while (inputArray.length > 2) { // This function works as long as there are 3 or more items in the array
+        displayEquation()
         let input1 = parseInt(inputArray.shift()); // First number
         let input2 = inputArray.shift(); // Operator
         let input3 = parseInt(inputArray.shift()); // Second number
-        console.log(input1);
-        console.log(input2);
-        console.log(input3);
-        if (input2 === "+") {
+        if (input2 === '+') {
             add(input1, input3)
         }
         if (input2 === "-") {
             subtract(input1, input3)
         }
-        if (input2 === "*") {
+        if (input2 === "x") {
             multiply(input1, input3)
         }
-        if (input2 === "/") {
+        if (input2 === "÷") {
             divide(input1, input3)
         }
     }
-    return inputArray
+    displayCurrent(inputArray[0])
 }
 
-// console.log(operate());
-// console.log(inputArray);
+// Adding event listeners to buttons
+const buttons = document.querySelectorAll("button");
+buttons.forEach((button) => button.addEventListener('click', useCalculator))
+
+let currentInput = ""
+function useCalculator() {
+    if (this.className === "number") {
+        currentInput += this.textContent;
+        displayCurrent(currentInput);
+    }
+    if (this.className === "addition") { // Case where addition is chosen
+        if (currentInput === "") { // Error Check
+            currentInput = "Math Error";
+            displayCurrent(currentInput);
+            currentInput = ""
+            return
+        }
+        inputArray.push(currentInput);
+        currentInput = "";
+        inputArray.push("+");
+        displayEquation()
+        return
+    }
+    if (this.className === "subtraction") { // Case where subtraction is chosen
+        if (currentInput === "") { // Error Check
+            currentInput = "Math Error";
+            displayCurrent(currentInput);
+            currentInput = ""
+            return
+        }
+        inputArray.push(currentInput);
+        currentInput = "";
+        inputArray.push("-");
+        displayEquation()
+        return
+    }
+    if (this.className === "division") { // Case where division is chosen
+        if (currentInput === "") { // Error check
+            currentInput = "Math Error";
+            displayCurrent(currentInput);
+            currentInput = ""
+            return
+        }
+        inputArray.push(currentInput);
+        currentInput = "";
+        inputArray.push("÷");
+        displayEquation()
+        return
+    }
+    if (this.className === "multiplication") { // Case where multiplication is chosen
+        if (currentInput === "") { // Error Check
+            currentInput = "Math Error";
+            displayCurrent(currentInput);
+            currentInput = ""
+            return
+        }
+        inputArray.push(currentInput);
+        currentInput = "";
+        inputArray.push("x");
+        displayEquation()
+        return
+    }
+    if (this.className === "equals"){
+        if (currentInput === "") { // Error Check
+            currentInput = "Math Error";
+            displayCurrent(currentInput);
+            currentInput = ""
+            return
+        }
+        inputArray.push(currentInput);
+        currentInput = "";
+        operate();
+        return
+    } 
+}
+
+function displayEquation() {
+    const display = document.querySelector(".display-equation");
+    display.textContent = "";
+    let content = "";
+    for (let i = 0; i < inputArray.length; i++) {
+        if (i === inputArray.length-1) {
+            content += inputArray[i];
+        }
+        else content += inputArray[i] + " ";
+    }
+    display.textContent = content;
+}
+
+function displayCurrent(string) {
+    const displayInput = document.querySelector(".display-input");
+    displayInput.textContent = string;
+}

@@ -29,7 +29,9 @@ function divide(a, b){
 }
 
 // Function that chooses which operation to use
+let pressedEnter = false;
 function operate() {
+    pressedEnter = true;
     displayEquation()
     while (inputArray.length > 2) { // This function works as long as there are 3 or more items in the array
         displayEquation()
@@ -94,6 +96,13 @@ function useCalculator() {
         deleteButton();
         return;
     }
+    if (this.className === "clear") {
+        if (currentInput === "" && inputArray.length === 0) {
+            return;
+        }
+        clearAll();
+        return;
+    }
 }
 
 // Displays the current equation being inputted into the calculator
@@ -119,12 +128,17 @@ function displayCurrent(string) {
 // Delete button (acts as an undo button)
 let tempString = ""
 function deleteButton() {
-    if (currentInput !== "") {
+    if (currentInput !== "") { // Case where you are undoing changes to the current input being written
         currentInput = currentInput.substring(0, currentInput.length-1)
         displayCurrent()
         return
     }
-    else {
+    if (pressedEnter) { // Case when you have already finished the calculation and pressed this button to clear everything
+        pressedEnter = false;
+        clearAll();
+        return;
+    }
+    else { // Case where you are undoing something from earlier (has already been added to the inputArray)
         tempString = inputArray[inputArray.length-1]
         if (tempString.length === 1) {
             inputArray.pop()
@@ -136,5 +150,13 @@ function deleteButton() {
         displayEquation()
         return
     }
+}
 
+// Function to clear the entire calculator
+function clearAll() {
+    inputArray = [];
+    currentInput = "";
+    displayCurrent();
+    displayEquation();
+    return;
 }

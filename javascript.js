@@ -87,8 +87,16 @@ function useCalculator() {
         operate();
         return
     } 
+    if (this.className === "delete") {
+        if (currentInput === "" && inputArray.length === 0) {
+            return;
+        }
+        deleteButton();
+        return;
+    }
 }
 
+// Displays the current equation being inputted into the calculator
 function displayEquation() {
     const display = document.querySelector(".display-equation");
     display.textContent = "";
@@ -102,7 +110,31 @@ function displayEquation() {
     display.textContent = content;
 }
 
+// Displays the current string
 function displayCurrent(string) {
     const displayInput = document.querySelector(".display-input");
     displayInput.textContent = string;
+}
+
+// Delete button (acts as an undo button)
+let tempString = ""
+function deleteButton() {
+    if (currentInput !== "") {
+        currentInput = currentInput.substring(0, currentInput.length-1)
+        displayCurrent()
+        return
+    }
+    else {
+        tempString = inputArray[inputArray.length-1]
+        if (tempString.length === 1) {
+            inputArray.pop()
+            displayEquation()
+            return;
+        }
+        tempString = tempString.substring(0, tempString.length-1)
+        inputArray[inputArray.length-1] = tempString
+        displayEquation()
+        return
+    }
+
 }

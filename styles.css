@@ -45,7 +45,7 @@
     display: inline-block
 }
 
-.regular, .operation, .number, .equals {
+.regular, .operation, .number, .equals, .delete, .clear {
     width: 60px;
     height: 60px;
     border-radius: 50%;

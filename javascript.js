@@ -59,10 +59,10 @@ buttons.forEach((button) => button.addEventListener('click', useCalculator))
 let currentInput = ""
 function useCalculator() {
     if (this.className === "number") {
-        currentInput += this.textContent;
+        currentInput += this.innerHTML;
         displayCurrent(currentInput);
     }
-    if (this.className === "addition") { // Case where addition is chosen
+    if (this.className === "operation") {
         if (currentInput === "") { // Error Check
             currentInput = "Math Error";
             displayCurrent(currentInput);
@@ -71,46 +71,7 @@ function useCalculator() {
         }
         inputArray.push(currentInput);
         currentInput = "";
-        inputArray.push("+");
-        displayEquation()
-        return
-    }
-    if (this.className === "subtraction") { // Case where subtraction is chosen
-        if (currentInput === "") { // Error Check
-            currentInput = "Math Error";
-            displayCurrent(currentInput);
-            currentInput = ""
-            return
-        }
-        inputArray.push(currentInput);
-        currentInput = "";
-        inputArray.push("-");
-        displayEquation()
-        return
-    }
-    if (this.className === "division") { // Case where division is chosen
-        if (currentInput === "") { // Error check
-            currentInput = "Math Error";
-            displayCurrent(currentInput);
-            currentInput = ""
-            return
-        }
-        inputArray.push(currentInput);
-        currentInput = "";
-        inputArray.push("÷");
-        displayEquation()
-        return
-    }
-    if (this.className === "multiplication") { // Case where multiplication is chosen
-        if (currentInput === "") { // Error Check
-            currentInput = "Math Error";
-            displayCurrent(currentInput);
-            currentInput = ""
-            return
-        }
-        inputArray.push(currentInput);
-        currentInput = "";
-        inputArray.push("x");
+        inputArray.push(this.innerHTML);
         displayEquation()
         return
     }

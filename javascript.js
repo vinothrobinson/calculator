@@ -1,8 +1,7 @@
 // use array.push() to add to end, use array.unshift() to prepend
-// Array for storing inputs
+// Arrays for storing inputs and operators
 let inputArray = [];
 let operatorList = ["+", "-", "x", "÷", "%"]
-// let inputArray = ["1", "+", "3", "*", "5"];
 
 // Functions for basic operations
 function add(a, b) {
@@ -41,9 +40,9 @@ function operate() {
     pressedEnter = true;
     displayEquation()
     while (inputArray.length > 2) { // This function works as long as there are 3 or more items in the array
-        let input1 = parseInt(inputArray.shift()); // First number
+        let input1 = parseFloat(inputArray.shift()); // First number
         let input2 = inputArray.shift(); // Operator
-        let input3 = parseInt(inputArray.shift()); // Second number
+        let input3 = parseFloat(inputArray.shift()); // Second number
         if (input2 === '+') {
             add(input1, input3)
         }
@@ -69,12 +68,18 @@ buttons.forEach((button) => button.addEventListener('click', useCalculator))
 
 let currentInput = ""
 let isError = false
+let isDecimal = false
 function useCalculator() {
-    if (this.className === "number") {
+    if (this.className === "number") { // Allows for multi digit inputs
         currentInput += this.innerHTML;
         displayCurrent(currentInput);
     }
-    if (this.className === "operation") {
+    if (this.className === "decimal" && !isDecimal) { // Allows for decimal numbers
+        currentInput += this.innerHTML;
+        isDecimal = true; // Prevents multiple decimal points in the same number
+        displayCurrent(currentInput);
+    }
+    if (this.className === "operation") { // Used to end the current input and add an operator to the array
         if (currentInput === "") { // Error Check
             currentInput = "Math Error2";
             isError = true;
@@ -83,12 +88,13 @@ function useCalculator() {
             return
         }
         inputArray.push(currentInput);
+        isDecimal = false;
         currentInput = "";
         inputArray.push(this.innerHTML);
         displayEquation()
         return
     }
-    if (this.className === "equals"){
+    if (this.className === "equals"){ // Checks if the equal sign on the calculator is clicked, to solve the equation
         if (currentInput === "") { // Error Check
             currentInput = "Math Error";
             isError = true;
@@ -100,14 +106,14 @@ function useCalculator() {
         operate();
         return
     } 
-    if (this.className === "delete") {
+    if (this.className === "delete") { // Case for undoing the last input
         if (currentInput === "" && inputArray.length === 0) {
             return;
         }
         deleteButton();
         return;
     }
-    if (this.className === "clear") {
+    if (this.className === "clear") { // Case to clear the calculator
         if (currentInput === "" && inputArray.length === 0) {
             return;
         }
@@ -140,11 +146,14 @@ function displayCurrent(string) {
 let tempString = ""
 function deleteButton() {
     if (currentInput !== "") { // Case where you are undoing changes to the current input being written
+        if (currentInput[currentInput.length-1] === ".") {
+            isDecimal = false;
+        }
         currentInput = currentInput.substring(0, currentInput.length-1)
-        displayCurrent()
+        displayCurrent(currentInput)
         return
     }
-    if (isError) {
+    if (isError) { // Case for when you run into a Math Error
         isError = false;
         clearAll();
         return;
@@ -179,7 +188,7 @@ function deleteButton() {
 function clearAll() {
     inputArray = [];
     currentInput = "";
-    displayCurrent();
+    displayCurrent(currentInput);
     displayEquation();
     return;
 }

@@ -95,7 +95,7 @@ function useCalculator() {
         return
     }
     if (this.className === "equals"){ // Checks if the equal sign on the calculator is clicked, to solve the equation
-        if (currentInput === "") { // Error Check
+        if (currentInput === "" || inputArray.length < 1) { // Error Check
             currentInput = "Math Error";
             isError = true;
             displayCurrent(currentInput);
@@ -145,14 +145,6 @@ function displayCurrent(string) {
 // Delete button (acts as an undo button)
 let tempString = ""
 function deleteButton() {
-    if (currentInput !== "") { // Case where you are undoing changes to the current input being written
-        if (currentInput[currentInput.length-1] === ".") {
-            isDecimal = false;
-        }
-        currentInput = currentInput.substring(0, currentInput.length-1)
-        displayCurrent(currentInput)
-        return
-    }
     if (isError) { // Case for when you run into a Math Error
         isError = false;
         clearAll();
@@ -162,6 +154,14 @@ function deleteButton() {
         pressedEnter = false;
         clearAll();
         return;
+    }
+    if (currentInput !== "") { // Case where you are undoing changes to the current input being written
+        if (currentInput[currentInput.length-1] === ".") {
+            isDecimal = false;
+        }
+        currentInput = currentInput.substring(0, currentInput.length-1)
+        displayCurrent(currentInput)
+        return
     }
     else { // Case where you are undoing something from earlier (has already been added to the inputArray)
         tempString = inputArray[inputArray.length-1]

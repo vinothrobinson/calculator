@@ -1,6 +1,7 @@
 // use array.push() to add to end, use array.unshift() to prepend
 // Array for storing inputs
 let inputArray = [];
+let operatorList = ["+", "-", "x", "÷", "%"]
 // let inputArray = ["1", "+", "3", "*", "5"];
 
 // Functions for basic operations
@@ -28,13 +29,18 @@ function divide(a, b){
     inputArray.unshift(result)
 }
 
+function modulus(a, b) {
+    result = a % b
+    result = result.toString()
+    inputArray.unshift(result)
+}
+
 // Function that chooses which operation to use
 let pressedEnter = false;
 function operate() {
     pressedEnter = true;
     displayEquation()
     while (inputArray.length > 2) { // This function works as long as there are 3 or more items in the array
-        displayEquation()
         let input1 = parseInt(inputArray.shift()); // First number
         let input2 = inputArray.shift(); // Operator
         let input3 = parseInt(inputArray.shift()); // Second number
@@ -50,6 +56,9 @@ function operate() {
         if (input2 === "÷") {
             divide(input1, input3)
         }
+        if (input2 === "%") {
+            modulus(input1, input3)
+        }
     }
     displayCurrent(inputArray[0])
 }
@@ -59,6 +68,7 @@ const buttons = document.querySelectorAll("button");
 buttons.forEach((button) => button.addEventListener('click', useCalculator))
 
 let currentInput = ""
+let isError = false
 function useCalculator() {
     if (this.className === "number") {
         currentInput += this.innerHTML;
@@ -66,7 +76,8 @@ function useCalculator() {
     }
     if (this.className === "operation") {
         if (currentInput === "") { // Error Check
-            currentInput = "Math Error";
+            currentInput = "Math Error2";
+            isError = true;
             displayCurrent(currentInput);
             currentInput = ""
             return
@@ -80,8 +91,8 @@ function useCalculator() {
     if (this.className === "equals"){
         if (currentInput === "") { // Error Check
             currentInput = "Math Error";
+            isError = true;
             displayCurrent(currentInput);
-            currentInput = ""
             return
         }
         inputArray.push(currentInput);
@@ -133,6 +144,11 @@ function deleteButton() {
         displayCurrent()
         return
     }
+    if (isError) {
+        isError = false;
+        clearAll();
+        return;
+    }
     if (pressedEnter) { // Case when you have already finished the calculation and pressed this button to clear everything
         pressedEnter = false;
         clearAll();
@@ -141,6 +157,13 @@ function deleteButton() {
     else { // Case where you are undoing something from earlier (has already been added to the inputArray)
         tempString = inputArray[inputArray.length-1]
         if (tempString.length === 1) {
+            if (operatorList.includes(tempString)) {
+                currentInput = inputArray[inputArray.length-2]
+                inputArray.pop()
+                inputArray.pop()
+                displayEquation()
+                return;
+            }
             inputArray.pop()
             displayEquation()
             return;

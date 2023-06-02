@@ -1,3 +1,7 @@
+.calculator {
+    display: inline-block
+}
+
 .calculator-body {
     background-color: rgb(166, 166, 166);
     width: 300px;
@@ -19,30 +23,32 @@
     margin-bottom: 30px;
 }
 
-.display-equation {
+.display-equation, .display-input {
     width: 250px;
     height: 36px;
-    border: black solid 1px;
+    /* border: black solid 1px; */
     margin-top: 2px;
     position: relative;
     left: 4px;
     top: 1px;
+    text-align: right;
 }
 
 .display-input {
-    width: 250px;
     height: 34px;
-    border: black solid 1px;
     margin-bottom: 2px;
-    position: relative;
+    margin-top: 0;
     left: 4px;
+    top: 0;
+    font-size: 20px;
+    color: white;
 }
 
 .calculator-buttons {
     width: 260px;
     height: 320px;
     /* border: black solid 1px; */
-    display: inline-block
+    display: inline-block;
 }
 
 .decimal, .operation, .number, .equals, .delete, .clear {
@@ -61,4 +67,29 @@
     width: 120px;
     height: 60px;
     border-radius: 15px;
+}
+
+.operation:hover {
+    background-color: rgb(127, 232, 255);
+}
+
+.number:hover, .decimal:hover {
+    background-color: rgb(207, 207, 207);
+}
+
+.clear:hover {
+    background-color: rgb(215, 121, 121);
+}
+
+.delete:hover {
+    background-color: rgb(249, 153, 89);
+}
+
+.equals:hover {
+    background-color: rgb(156, 240, 114);
+}
+
+body {
+    text-align: center;
+    background-color: rgb(240, 225, 204);
 }

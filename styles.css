@@ -51,8 +51,8 @@
     display: inline-block;
     position: absolute;
     left: 50%;
-    transform: translateX(-50%);
-    top: 32%;
+    transform: translate(-50%, 150px);
+    /* top: 32%; */
 }
 
 .decimal, .operation, .number, .equals, .delete, .clear {

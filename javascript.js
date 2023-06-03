@@ -60,6 +60,7 @@ function operate() {
         }
     }
     displayCurrent(inputArray[0])
+
 }
 
 // Adding event listeners to buttons
@@ -71,6 +72,9 @@ let isError = false
 let isDecimal = false
 function useCalculator() {
     if (this.className === "number") { // Allows for multi digit inputs
+        if (this.className === "number" && pressedEnter) {
+            clearAll();
+        }
         currentInput += this.innerHTML;
         displayCurrent(currentInput);
     }
@@ -114,7 +118,7 @@ function useCalculator() {
         return;
     }
     if (this.className === "clear") { // Case to clear the calculator
-        if (currentInput === "" && inputArray.length === 0) {
+        if (currentInput === "" && inputArray.length === 0 && !isError) {
             return;
         }
         clearAll();
@@ -146,12 +150,10 @@ function displayCurrent(string) {
 let tempString = ""
 function deleteButton() {
     if (isError) { // Case for when you run into a Math Error
-        isError = false;
         clearAll();
         return;
     }
     if (pressedEnter) { // Case when you have already finished the calculation and pressed this button to clear everything
-        pressedEnter = false;
         clearAll();
         return;
     }
@@ -186,6 +188,8 @@ function deleteButton() {
 
 // Function to clear the entire calculator
 function clearAll() {
+    isError = false;
+    pressedEnter = false;
     inputArray = [];
     currentInput = "";
     displayCurrent(currentInput);

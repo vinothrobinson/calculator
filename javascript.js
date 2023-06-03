@@ -81,7 +81,7 @@ function useCalculator() {
     }
     if (this.className === "operation") { // Used to end the current input and add an operator to the array
         if (currentInput === "") { // Error Check
-            currentInput = "Math Error2";
+            currentInput = "Math Error";
             isError = true;
             displayCurrent(currentInput);
             currentInput = ""
@@ -107,7 +107,7 @@ function useCalculator() {
         return
     } 
     if (this.className === "delete") { // Case for undoing the last input
-        if (currentInput === "" && inputArray.length === 0) {
+        if (currentInput === "" && inputArray.length === 0 && !isError) {
             return;
         }
         deleteButton();

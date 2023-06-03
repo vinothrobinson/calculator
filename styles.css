@@ -49,6 +49,10 @@
     height: 320px;
     /* border: black solid 1px; */
     display: inline-block;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 32%;
 }
 
 .decimal, .operation, .number, .equals, .delete, .clear {
